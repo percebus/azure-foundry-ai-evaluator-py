@@ -8,31 +8,31 @@ from azure.core.credentials import TokenCredential
 from azure.identity import AzureCliCredential, DefaultAzureCredential
 from dotenv import load_dotenv
 from lagom import Container, Singleton
+from lagom.interfaces import ReadableContainer
 
-from ai_evaluator.config.configuration import Configuration
 from ai_evaluator.config.logs import LoggingConfig
 from ai_evaluator.config.os_environ.azure_openai import AzureOpenAISettings
 from ai_evaluator.config.os_environ.settings import Settings
 
 container = Container()
 
-load_dotenv()  # FIXME? move to main.py?
-container[Settings] = Singleton(Settings())  # pyright: ignore[reportCallIssue]  # FIXME
+
+def create_settings(ctr: ReadableContainer) -> Singleton[Settings]:
+    load_dotenv()  # FIXME? move to main.py?
+    return Singleton(Settings())  # pyright: ignore[reportCallIssue]
+
+
+container[Settings] = create_settings
 container[AzureOpenAISettings] = lambda c: c[Settings].azure_openai
 
 container[LoggingConfig] = LoggingConfig
 container[Logger] = lambda c: c[LoggingConfig].logger
 
-# fmt: off
-container[Configuration] = lambda c: Configuration(
-    logging=c[LoggingConfig],
-    settings=c[Settings],
-    credential=c[TokenCredential],
-)
-# fmt: on
-
 container[AzureCliCredential] = AzureCliCredential
 container[DefaultAzureCredential] = DefaultAzureCredential
+
+# Choose either / or
+# container[TokenCredential] = lambda c: c[AzureCl``iCredential]
 container[TokenCredential] = lambda c: c[DefaultAzureCredential]
 
 container[AIProjectClient] = lambda c: AIProjectClient(

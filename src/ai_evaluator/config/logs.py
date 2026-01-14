@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 class LoggingConfig:
     """Logging Configuration class."""
 
-    name: str = field(default="semantic_kernel_sampler")
+    name: str = field(default="ai_evaluator")
 
     config_path: str = field(default_factory=lambda: "config/logging.conf")
 
