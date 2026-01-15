@@ -3,6 +3,9 @@ name: "[C]ontinuous [I]ntegration"
 on:
   workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
   pull_request:
+  push:
+    branches:
+      - main
 
 env:
   # python
