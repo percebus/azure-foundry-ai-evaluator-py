@@ -56,7 +56,6 @@ container[AzureOpenAIModelConfiguration] = lambda c: AzureOpenAIModelConfigurati
     azure_deployment=c[AzureOpenAISettings].deployment_name,
     api_version=c[AzureOpenAISettings].api_version,
     api_key=get_token(c),
-    # api_key=c[AzureOpenAISettings].api_key,
 )
 # fmt: on
 
