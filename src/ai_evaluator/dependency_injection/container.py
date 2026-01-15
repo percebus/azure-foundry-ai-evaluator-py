@@ -1,13 +1,13 @@
 from logging import Logger
 
-from azure.ai.evaluation import AzureOpenAIModelConfiguration, ContentSafetyEvaluator, QAEvaluator
+from azure.ai.evaluation import AzureOpenAIModelConfiguration, ContentSafetyEvaluator, GroundednessEvaluator, QAEvaluator, ViolenceEvaluator
 from azure.ai.evaluation._evaluators._common._base_eval import EvaluatorBase
 from azure.ai.evaluation._model_configurations import EvaluatorConfig
 from azure.ai.projects import AIProjectClient
 from azure.core.credentials import TokenCredential
 from azure.identity import AzureCliCredential, DefaultAzureCredential
 from dotenv import load_dotenv
-from lagom import Container, Singleton
+from lagom import Container
 from lagom.interfaces import ReadableContainer
 
 from ai_evaluator.config.logs import LoggingConfig
@@ -17,9 +17,12 @@ from ai_evaluator.config.os_environ.settings import Settings
 container = Container()
 
 
-def create_settings(ctr: ReadableContainer) -> Singleton[Settings]:
+def create_settings(ctr: ReadableContainer) -> Settings:
     load_dotenv()  # FIXME? move to main.py?
-    return Singleton(Settings())  # pyright: ignore[reportCallIssue]
+    settings = Settings()  # pyright: ignore[reportCallIssue]
+
+    # return Singleton(settings) # TODO
+    return settings
 
 
 container[Settings] = create_settings
@@ -59,6 +62,7 @@ container[AzureOpenAIModelConfiguration] = lambda c: AzureOpenAIModelConfigurati
 # - RelevanceEvaluator
 # - SimilarityEvaluator
 container[QAEvaluator] = lambda c: QAEvaluator(model_config=c[AzureOpenAIModelConfiguration])
+container[GroundednessEvaluator] = lambda c: GroundednessEvaluator(model_config=c[AzureOpenAIModelConfiguration])
 
 # SRC: https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk#composite-evaluators
 # NOTE: Includes
@@ -71,16 +75,24 @@ container[ContentSafetyEvaluator] = lambda c: ContentSafetyEvaluator(
     azure_ai_project=c[Settings].azure_ai_project_endpoint,
 )
 
+container[ViolenceEvaluator] = lambda c: ViolenceEvaluator(
+    credential=c[DefaultAzureCredential],
+    azure_ai_project=c[Settings].azure_ai_project_endpoint,
+)
+
 # SRC: https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk#evaluator-parameter-format
 container[dict[str, EvaluatorBase[str | float]]] = lambda c: {
     "qa": c[QAEvaluator],
     "content_safety": c[ContentSafetyEvaluator],
 }
 
-container[dict[str, EvaluatorConfig]] = lambda c: {
-    "groundedness": {  # EvaluatorConfig(  # TODO TypedDict
-        "query": "${data.queries}",
-        "context": "${data.context}",
-        "response": "${data.response}",
+container[dict[str, EvaluatorConfig]] = (
+    lambda c: {
+        # i.e.
+        # "groundedness": {  # EvaluatorConfig(  # TODO TypedDict
+        #     "query": "${data.query}",
+        #     "context": "${data.context}",
+        #     "response": "${data.response}",
+        # }
     }
-}
+)

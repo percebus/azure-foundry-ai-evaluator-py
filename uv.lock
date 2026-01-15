@@ -196,7 +196,7 @@ cli = [
 
 [package.metadata]
 requires-dist = [
-    { name = "azure-ai-evaluation", specifier = ">=1.13.1,<2.0" },
+    { name = "azure-ai-evaluation", specifier = "==1.13.1" },
     { name = "azure-ai-projects", specifier = "==2.0.0b1" },
     { name = "lagom", specifier = ">=2.7.7,<3.0" },
     { name = "pydantic-settings", specifier = ">=2.11.0,<3.0" },
