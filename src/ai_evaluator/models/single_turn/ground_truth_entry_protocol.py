@@ -1,4 +1,4 @@
-from typing import Optional, Protocol
+from typing import Protocol
 
 
 class GroundTruthEntryProtocol(Protocol):
@@ -6,4 +6,4 @@ class GroundTruthEntryProtocol(Protocol):
 
     ground_truth: str
 
-    context: Optional[str] = None
+    context: str | None = None

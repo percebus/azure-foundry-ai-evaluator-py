@@ -30,17 +30,27 @@ line-ending = "auto"
 
 [lint]
 select = [
-    "F",   # Pyflakes
+    "C4",  # flake8-comprehensions
     "E",   # pycodestyle
+    "F",   # Pyflakes
     "I",   # isort
+    "ICN", # flake8-import-conventions
+    "ISC", # flake8-implicit-str-concat
     "N",   # pep8-naming
+    "PL",  # PylLint
     "SIM", # flake8-simplify
+    "TCH",  # flake8-type-checking
     "TID", # flake8-tidy-imports
+    "UP",  # pyupgrade PEP604
     "W",   # warning
 ]
 
 # Additional rules
-extend-select = ["C4", "SIM", "TCH"]
+# "This is particularly useful in mono repositories
+#  where you want to establish a base standard for the entire company
+#  but allow projects to customize the configuration to best fit their needs."
+extend-select = [
+]
 
 fixable = ["ALL"]
 ignore = [

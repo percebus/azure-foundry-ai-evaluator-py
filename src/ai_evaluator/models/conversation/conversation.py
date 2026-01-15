@@ -1,4 +1,4 @@
-from typing_extensions import Protocol
+from typing import Protocol
 
 from ai_evaluator.models.conversation.message_protocol import MessageProtocol
 
