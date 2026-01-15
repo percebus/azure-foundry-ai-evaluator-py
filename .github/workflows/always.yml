@@ -1,0 +1,29 @@
+name: "[C]ontinuous [I]ntegration"
+
+on:
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+  pull_request:
+
+env:
+  # python
+  PYTHON_VERSION: 3.12.8
+  PYRIGHT_PYTHON_FORCE_VERSION: latest
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: percebus/github-actions-common/.github/actions/checkout@main
+      - uses: percebus/github-actions-uv/.github/actions/setup@main
+      - uses: percebus/github-actions-uv/.github/actions/tool_install@main
+        with:
+          requirements-file: ${{ inputs.working-directory }}/requirements.uv.tool.txt
+
+      - uses: percebus/github-actions-uv/.github/actions/python_install@main
+      - uses: percebus/github-actions-uv/.github/actions/sync@main
+
+      - name: poe ci
+        run: uv run poe ci
+
+      - uses: percebus/github-actions-pip/.github/actions/freeze@main

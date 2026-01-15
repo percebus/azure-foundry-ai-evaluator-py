@@ -44,11 +44,19 @@
     help = "Build the project"
     cmd = "uv build --all-packages --wheel"
 
-    [tasks.sync]
+    [tasks.sync_all]
     help = "uv sync everything"
     cmd = "uv sync --locked --all-extras"
+
+    [tasks.sync_release]
+    help = "uv sync release"
+    cmd = "uv sync --locked"
+
+    [tasks.sync]
+    help = "Run the CI pipeline tasks"
+    sequence = ["sync_all"]
 
 
     [tasks.ci]
     help = "Run the CI pipeline tasks"
-    sequence = ["sync", "lint", "build"]
+    sequence = ["sync_all", "lint", "build"]
