@@ -4,7 +4,7 @@ from azure.ai.evaluation import AzureOpenAIModelConfiguration, ContentSafetyEval
 from azure.ai.evaluation._evaluators._common._base_eval import EvaluatorBase
 from azure.ai.evaluation._model_configurations import EvaluatorConfig
 from azure.ai.projects import AIProjectClient
-from azure.core.credentials import TokenCredential
+from azure.core.credentials import AccessToken, TokenCredential
 from azure.identity import AzureCliCredential, DefaultAzureCredential
 from dotenv import load_dotenv
 from lagom import Container
@@ -25,6 +25,11 @@ def create_settings(ctr: ReadableContainer) -> Settings:
     return settings
 
 
+def get_token(ctr: ReadableContainer) -> str:
+    azure_openai_settings = ctr[AzureOpenAISettings]
+    return azure_openai_settings.api_key if azure_openai_settings.api_key else ctr[AccessToken].token
+
+
 container[Settings] = create_settings
 container[AzureOpenAISettings] = lambda c: c[Settings].azure_openai
 
@@ -35,8 +40,10 @@ container[AzureCliCredential] = AzureCliCredential
 container[DefaultAzureCredential] = DefaultAzureCredential
 
 # Choose either / or
-# container[TokenCredential] = lambda c: c[AzureCl``iCredential]
+# container[TokenCredential] = lambda c: c[AzureCliCredential]
 container[TokenCredential] = lambda c: c[DefaultAzureCredential]
+
+container[AccessToken] = lambda c: c[TokenCredential].get_token("https://cognitiveservices.azure.com/.default")
 
 container[AIProjectClient] = lambda c: AIProjectClient(
     endpoint=c[Settings].azure_ai_project_endpoint,
@@ -48,7 +55,7 @@ container[AzureOpenAIModelConfiguration] = lambda c: AzureOpenAIModelConfigurati
     azure_endpoint=c[AzureOpenAISettings].base_url,
     azure_deployment=c[AzureOpenAISettings].deployment_name,
     api_version=c[AzureOpenAISettings].api_version,
-    api_key=c[AzureOpenAISettings].api_key,
+    api_key=get_token(c),
 )
 # fmt: on
 

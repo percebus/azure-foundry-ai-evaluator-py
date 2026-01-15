@@ -1,4 +1,4 @@
-from typing import Optional, Protocol
+from typing import Protocol
 
 
 class MessageProtocol(Protocol):
@@ -6,4 +6,4 @@ class MessageProtocol(Protocol):
 
     content: str
 
-    context: Optional[str]
+    context: str | None
