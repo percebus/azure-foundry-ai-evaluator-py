@@ -46,7 +46,7 @@
 
     [tasks.sync_all]
     help = "uv sync everything"
-    cmd = "uv sync --locked --all-extras"
+    cmd = "uv sync --locked --all-groups"
 
     [tasks.sync_release]
     help = "uv sync release"
