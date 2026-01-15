@@ -4,15 +4,13 @@ from azure.ai.evaluation import AzureOpenAIModelConfiguration, ContentSafetyEval
 from azure.ai.evaluation._evaluators._common._base_eval import EvaluatorBase
 from azure.ai.evaluation._model_configurations import EvaluatorConfig
 from azure.ai.projects import AIProjectClient
-from azure.core.credentials import TokenCredential, AccessToken
+from azure.core.credentials import AccessToken, TokenCredential
 from azure.identity import AzureCliCredential, DefaultAzureCredential
 from dotenv import load_dotenv
 from lagom import Container
 from lagom.interfaces import ReadableContainer
 
 from ai_evaluator.config.logs import LoggingConfig
-from ai_evaluator.config.os_environ import settings
-from ai_evaluator.config.os_environ import azure_openai
 from ai_evaluator.config.os_environ.azure_openai import AzureOpenAISettings
 from ai_evaluator.config.os_environ.settings import Settings
 
