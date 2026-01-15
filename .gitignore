@@ -2,7 +2,7 @@
 !env*.local.example
 
 
-data/
+/data/
 
 
 # NOTE: vvv Do NOT add below this point
