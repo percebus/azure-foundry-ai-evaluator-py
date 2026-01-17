@@ -5,15 +5,14 @@
 
     [tasks.ruff_format]
         help = "format codebase with ruff"
-        cmd = "ruff format ./src"
+        cmd = "ruff format ./src ./tests"
 
     [tasks.ruff_check-fix]
         help = "fix codebase with ruff"
-        cmd = "ruff check --fix ./src"
-
+        cmd = "ruff check --fix ./src ./tests"
     [tasks.ruff_check]
         help = "lint codebase with ruff"
-        cmd = "ruff check ./src"
+        cmd = "ruff check ./src ./tests"
 
     [tasks.uv-sort]
         help = "fixes order of imports"
