@@ -35,10 +35,13 @@
         help = "Reformat"
         sequence = ["uv-sort", "ruff_format", "ruff_check-fix", "lint"]
 
+    [tasks.test]
+        help = "Run tests"
+        cmd = "pytest tests"
 
     [tasks.dev]
     help = "Run the development tasks"
-    sequence = ["clean", "format"]
+    sequence = ["clean", "format", "test"]
 
     [tasks.build]
     help = "Build the project"
@@ -59,4 +62,4 @@
 
     [tasks.ci]
     help = "Run the CI pipeline tasks"
-    sequence = ["sync_all", "lint", "build"]
+    sequence = ["sync_all", "lint", "test", "build"]
