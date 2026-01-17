@@ -5,15 +5,14 @@
 
     [tasks.ruff_format]
         help = "format codebase with ruff"
-        cmd = "ruff format ./src"
+        cmd = "ruff format ./src ./tests"
 
     [tasks.ruff_check-fix]
         help = "fix codebase with ruff"
-        cmd = "ruff check --fix ./src"
-
+        cmd = "ruff check --fix ./src ./tests"
     [tasks.ruff_check]
         help = "lint codebase with ruff"
-        cmd = "ruff check ./src"
+        cmd = "ruff check ./src ./tests"
 
     [tasks.uv-sort]
         help = "fixes order of imports"
@@ -35,10 +34,13 @@
         help = "Reformat"
         sequence = ["uv-sort", "ruff_format", "ruff_check-fix", "lint"]
 
+    [tasks.test]
+        help = "Run tests"
+        cmd = "pytest tests"
 
     [tasks.dev]
     help = "Run the development tasks"
-    sequence = ["clean", "format"]
+    sequence = ["clean", "format", "test"]
 
     [tasks.build]
     help = "Build the project"
@@ -59,4 +61,4 @@
 
     [tasks.ci]
     help = "Run the CI pipeline tasks"
-    sequence = ["sync_all", "lint", "build"]
+    sequence = ["sync_all", "lint", "test", "build"]
