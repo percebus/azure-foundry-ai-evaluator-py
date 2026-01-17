@@ -22,7 +22,7 @@ jobs:
       - uses: percebus/github-actions-uv/.github/actions/tool_install@main
       - uses: percebus/github-actions-uv/.github/actions/python_install@main
       - uses: percebus/github-actions-uv/.github/actions/sync@main
-      - uses: percebus/github-actions-uv/.github/actions/pip@main
+      - uses: percebus/github-actions-uv/.github/actions/pip_freeze@main
 
       - name: poe ci
         run: uv run poe ci
