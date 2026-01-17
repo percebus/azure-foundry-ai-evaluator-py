@@ -1,16 +1,16 @@
-from typing import Generator
+from collections.abc import Generator
 from unittest.mock import MagicMock
 
 import pytest
-from azure.core.credentials import TokenCredential
 from azure.ai.projects import AIProjectClient
+from azure.core.credentials import AccessToken, TokenCredential
 
 from ai_evaluator.config.logs import LoggingConfig
 from ai_evaluator.config.os_environ.settings import Settings
 
 
 @pytest.fixture()
-def settings() -> Generator[Settings, None, None]:
+def settings() -> Generator[Settings]:
     # Before each test
     settings = Settings()  # pyright: ignore[reportCallIssue]
 
@@ -22,7 +22,7 @@ def settings() -> Generator[Settings, None, None]:
 
 
 @pytest.fixture()
-def logging_config() -> Generator[LoggingConfig, None, None]:
+def logging_config() -> Generator[LoggingConfig]:
     # Before each test
     logging_config = LoggingConfig()
 
@@ -34,7 +34,7 @@ def logging_config() -> Generator[LoggingConfig, None, None]:
 
 
 @pytest.fixture()
-def token_credential() -> Generator[TokenCredential, None, None]:
+def token_credential() -> Generator[TokenCredential]:
     # Before each test
     credential = MagicMock(spec=TokenCredential)
 
@@ -46,7 +46,19 @@ def token_credential() -> Generator[TokenCredential, None, None]:
 
 
 @pytest.fixture()
-def ai_project_client() -> Generator[AIProjectClient, None, None]:
+def access_token() -> Generator[AccessToken]:
+    # Before each test
+    access_token = MagicMock(spec=AccessToken)
+
+    # During each test
+    yield access_token
+
+    # After each test
+    access_token = None
+
+
+@pytest.fixture()
+def ai_project_client() -> Generator[AIProjectClient]:
     # Before each test
     ai_project_client = MagicMock(spec=AIProjectClient)
 
