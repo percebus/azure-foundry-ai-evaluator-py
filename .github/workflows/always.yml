@@ -31,7 +31,7 @@ jobs:
       - name: poe ci
         run: uv run poe ci
 
-      - uses: percebus/github-actions-testing/.github/actions/junit@chore/bump-actions
+      - uses: percebus/github-actions-testing/.github/actions/junit@main
         with:
           reporter: python-xunit
           files_pattern: test-results.xml
