@@ -150,21 +150,6 @@ wheels = [
 ]
 
 [[package]]
-name = "azure-ai-projects"
-version = "2.0.0b1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "azure-core" },
-    { name = "azure-storage-blob" },
-    { name = "isodate" },
-    { name = "typing-extensions" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/91/33/69b9db7f232a43216bf6fb58172335a269abdc923e78e7ecacc71590aa6e/azure_ai_projects-2.0.0b1.tar.gz", hash = "sha256:259413c5129b4f4902da335c36c2a0389b003953fa0116d9d054f54c3f42c3f4", size = 335085, upload-time = "2025-11-12T03:59:59.652Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/82/69/b0f93d40bf24ecf3785097e601e389f9d8b5d33b979db7eee6ec5b92df40/azure_ai_projects-2.0.0b1-py3-none-any.whl", hash = "sha256:88eca153c63c8d93bc1776858ae036f1796ef0b9552b77736c446e575e3b132a", size = 221008, upload-time = "2025-11-12T04:00:01.281Z" },
-]
-
-[[package]]
 name = "azure-core"
 version = "1.36.0"
 source = { registry = "https://pypi.org/simple" }
@@ -183,7 +168,6 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "azure-ai-evaluation" },
-    { name = "azure-ai-projects" },
     { name = "lagom" },
     { name = "pydantic-settings" },
 ]
@@ -203,7 +187,6 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "azure-ai-evaluation", specifier = "==1.13.1" },
-    { name = "azure-ai-projects", specifier = "==2.0.0b1" },
     { name = "lagom", specifier = ">=2.7.7,<3.0" },
     { name = "pydantic-settings", specifier = ">=2.11.0,<3.0" },
 ]

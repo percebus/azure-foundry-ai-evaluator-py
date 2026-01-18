@@ -6,7 +6,6 @@ readme = "README.md"
 requires-python = ">=3.13,<4.0"
 dependencies = [
     "azure-ai-evaluation==1.13.1",
-    "azure-ai-projects==2.0.0b1",
     "lagom>=2.7.7,<3.0",
     "pydantic-settings>=2.11.0,<3.0",
 ]
