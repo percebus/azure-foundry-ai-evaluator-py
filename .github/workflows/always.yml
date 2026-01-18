@@ -31,7 +31,7 @@ jobs:
       - name: poe ci
         run: uv run poe ci
 
-      - uses: percebus/github-actions-testing/.github/actions/junit@main
+      - uses: percebus/github-actions-testing/.github/actions/junit@chore/bump-actions
         with:
-          tests_name: "" # disables actions/test-reporter. It doesn't like pytest's junit format
+          # tests_name: "" # disables actions/test-reporter. It doesn't like pytest's junit format
           files_pattern: test-results.xml
