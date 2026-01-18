@@ -18,7 +18,6 @@ def run(container: Container) -> None:
     evaluator_configurations = container[dict[str, EvaluatorConfig]]
     settings = container[Settings]
 
-    # with project_client:
     evaluation_result: EvaluationResult = evaluate(
         data=dataset_path,
         evaluators=evaluators,  # pyright: ignore[reportArgumentType]
