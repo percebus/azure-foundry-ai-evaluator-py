@@ -6,7 +6,6 @@ import pytest
 from azure.ai.evaluation import AzureOpenAIModelConfiguration, ContentSafetyEvaluator, QAEvaluator
 from azure.ai.evaluation._evaluators._common._base_eval import EvaluatorBase
 from azure.ai.evaluation._model_configurations import EvaluatorConfig
-from azure.ai.projects import AIProjectClient
 from azure.core.credentials import AccessToken, TokenCredential
 from azure.identity import DefaultAzureCredential
 from hamcrest import assert_that, has_length, instance_of, is_
@@ -21,13 +20,11 @@ def patched_container(
     settings: Settings,
     token_credential: TokenCredential,
     access_token: AccessToken,
-    ai_project_client: AIProjectClient,
 ) -> Generator[Container]:
     # Before each test
     # SRC: https://lagom-di.readthedocs.io/en/latest/testing_with_lagom/
     test_container = container.clone()
     test_container[Settings] = settings  # .env.test
-    test_container[AIProjectClient] = ai_project_client  # MagicMock
     test_container[TokenCredential] = token_credential  # MagicMock
     test_container[AccessToken] = access_token  # MagicMock
 
@@ -63,12 +60,6 @@ def test__contains_instance_of__AccessToken(patched_container: Container) -> Non
     access_token = patched_container[AccessToken]
     assert_that(access_token, is_(instance_of(AccessToken)))
     assert_that(access_token, is_(instance_of(MagicMock)))
-
-
-def test__contains_instance_of__AIProjectClient(patched_container: Container) -> None:
-    ai_project_client = patched_container[AIProjectClient]
-    assert_that(ai_project_client, is_(instance_of(AIProjectClient)))
-    assert_that(ai_project_client, is_(instance_of(MagicMock)))
 
 
 def test__contains_instance_of__AzureOpenAIModelConfiguration(patched_container: Container) -> None:

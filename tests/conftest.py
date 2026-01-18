@@ -2,7 +2,6 @@ from collections.abc import Generator
 from unittest.mock import MagicMock
 
 import pytest
-from azure.ai.projects import AIProjectClient
 from azure.core.credentials import AccessToken, TokenCredential
 
 from ai_evaluator.config.logs import LoggingConfig
@@ -55,15 +54,3 @@ def access_token() -> Generator[AccessToken]:
 
     # After each test
     access_token = None
-
-
-@pytest.fixture()
-def ai_project_client() -> Generator[AIProjectClient]:
-    # Before each test
-    ai_project_client = MagicMock(spec=AIProjectClient)
-
-    # During each test
-    yield ai_project_client
-
-    # After each test
-    ai_project_client = None
