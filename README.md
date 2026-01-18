@@ -4,6 +4,10 @@
 
 ## References
 
+- [Evaluate your generative AI application locally with the Azure AI Evaluation SDK (preview)](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk?view=foundry-classic)
+
+### Soon
+
 - [Evaluate your AI agents (preview)](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/agent-evaluate-sdk?view=foundry&preserve-view=true)
 
 ### GitHub
