@@ -3,7 +3,6 @@ from logging import Logger
 from azure.ai.evaluation import AzureOpenAIModelConfiguration, ContentSafetyEvaluator, GroundednessEvaluator, QAEvaluator, ViolenceEvaluator
 from azure.ai.evaluation._evaluators._common._base_eval import EvaluatorBase
 from azure.ai.evaluation._model_configurations import EvaluatorConfig
-from azure.ai.projects import AIProjectClient
 from azure.core.credentials import AccessToken, TokenCredential
 from azure.identity import AzureCliCredential, DefaultAzureCredential
 from dotenv import load_dotenv
@@ -44,11 +43,6 @@ container[DefaultAzureCredential] = DefaultAzureCredential
 container[TokenCredential] = lambda c: c[DefaultAzureCredential]
 
 container[AccessToken] = lambda c: c[TokenCredential].get_token("https://cognitiveservices.azure.com/.default")
-
-container[AIProjectClient] = lambda c: AIProjectClient(
-    endpoint=c[Settings].azure_ai_project_endpoint,
-    credential=container[TokenCredential],  # pyright: ignore[reportArgumentType]
-)
 
 # fmt: off
 container[AzureOpenAIModelConfiguration] = lambda c: AzureOpenAIModelConfiguration(
